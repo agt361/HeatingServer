@@ -38,7 +38,7 @@ def DoSystem(Name, TIP):
     ClrScrn()
     while (True):
         ClrScrn()
-        print("St Vigor's Heating parameters for ",Name,"\n" ,sep ='')
+        print("Heating parameters for ",Name,"\n" ,sep ='')
         FileName = "/home/pi/shared/System.csv"
         df = GetFile(FileName,TIP)
         print('Target temerature:', float(df.loc[0,'Target Temperature']),'\n')

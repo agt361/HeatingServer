@@ -66,7 +66,7 @@ def DoOverrides(Name, TIP):
         KOnT = datetime.strptime(df.loc[0,'KeepOnTill'],'%Y/%m/%d %H:%M:%S')
         KOffT = datetime.strptime(df.loc[0,'KeepOffTill'],'%Y/%m/%d %H:%M:%S')
 
-        print("St Vigor's Heating overrides for ",Name,"\n" ,sep ='')
+        print("Heating overrides for ",Name,"\n" ,sep ='')
         if KOnT > datetime.now():
             print ("Heating overridden to ON until",KOnT,'\n')
             j = GetNumber(True,"Do you want to cancel this? 0 (No) 9 (Yes): ",0,9)
