@@ -16,8 +16,6 @@ WDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Su
 
 #BaseTime = datetime(2000,1,1,1,1)
 
-
-
 def GetNumberFloat(flag,text,mn,mx):
     y = -1
     while y > mx or y < mn:
@@ -34,13 +32,13 @@ def ClrScrn():
     print(BOLD)
         
             
-def DoSystem(Name, TIP):
+def DoSystem(Name):
     ClrScrn()
     while (True):
         ClrScrn()
         print("Heating parameters for ",Name,"\n" ,sep ='')
-        FileName = "/home/pi/shared/System.csv"
-        df = GetFile(FileName,TIP)
+        FileName = "System.csv"
+        df = GetFile(FileName)
         print('Target temerature:', float(df.loc[0,'Target Temperature']),'\n')
         print('Background temerature:', float(df.loc[0,'Background Temperature']),'\n')
         print('Hysteresis (full cycle):', float(df.loc[0,'Hysteresis']),'\n')
@@ -56,9 +54,7 @@ def DoSystem(Name, TIP):
         if y == 4:
             df.loc[0,'Thermal Lag'] = GetNumberFloat(True,"\nEnter Thermal Lag: ", 0.1, 2)
         df.loc[0,'PicoIP'] = cf.Picourl[Name]
-        SaveFile(df,FileName, TIP)
+        SaveFile(df,FileName)
         if y == 0:
             return
  
-#DoSystem('Nave','Nave')
-#url = pd.Series( ['1.2.3.4', '5.6.7.8'], index=['Nave', 'Chancel'])

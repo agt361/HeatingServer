@@ -31,25 +31,17 @@ def ClrScrn():
     print(BOLD)
         
             
-def SaveOverride(xs1,xs2,TIP):
+def SaveOverride(xs1,xs2):
     x = datetime.now()
     xslf = x.strftime("%Y%m%d%H%M%S")
     filenamel = '/home/pi/shared/OFlag.csv'
-    filenamed = '/home/pi/shared/OFlag'+xslf+'.csv'
+    filenamed = 'OFlag'+xslf+'.csv'
     with open(filenamel, 'w') as f:
         f.write(f"KeepOnTill,KeepOffTill\n" )
         f.write(f"{xs1},{xs2}\n" )
-    CTFR = 'pi@'+TIP+':'+filenamed
-    CTF = filenamel
-    subprocess.run(['scp', CTF, CTFR],
-                stdout=subprocess.DEVNULL,
-				stderr=subprocess.DEVNULL)
+    shutil.copyfile(filenamel,filenamed)
     while True:
-        CTFR = 'pi@'+TIP+':/home/pi/shared/States.csv'
-        CTF = "/home/pi/shared/States.csv"
-        subprocess.run(['scp', CTFR, CTF],
-					stdout=subprocess.DEVNULL,
-					stderr=subprocess.DEVNULL)
+        CTF = "States.csv"
         df = pd.read_csv(CTF)
         conf = datetime.strptime(df.loc[0,'Confirmed'],'%Y/%m/%d %H:%M:%S')
         if conf > x: return
@@ -57,11 +49,11 @@ def SaveOverride(xs1,xs2,TIP):
         print("Waiting for confirmation...")
 
 
-def DoOverrides(Name, TIP):
+def DoOverrides(Name):
     ClrScrn()
     while (True):
         ClrScrn()
-        df = GetFile("/home/pi/shared/States.csv",TIP)
+        df = GetFile("States.csv")
 
         KOnT = datetime.strptime(df.loc[0,'KeepOnTill'],'%Y/%m/%d %H:%M:%S')
         KOffT = datetime.strptime(df.loc[0,'KeepOffTill'],'%Y/%m/%d %H:%M:%S')
@@ -74,7 +66,7 @@ def DoOverrides(Name, TIP):
             else: 
                 x = datetime.now()
                 xsl = x.strftime("%Y/%m/%d %H:%M:%S")
-                SaveOverride(xsl,xsl,TIP)
+                SaveOverride(xsl,xsl)
         elif KOffT > datetime.now():
             print ("Heating overridden to OFF until",KOffT,'\n')
             j = GetNumber(True,"Do you want to cancel this? 0 (No) 9 (Yes): ",0,9)
@@ -82,7 +74,7 @@ def DoOverrides(Name, TIP):
             else: 
                 x = datetime.now()
                 xsl = x.strftime("%Y/%m/%d %H:%M:%S")
-                SaveOverride(xsl,xsl,TIP)
+                SaveOverride(xsl,xsl)
         else:
             print ("No heating overrides\n")
             j = GetNumber(True,"Do you want enter an override 0 (No) 9 (Yes): ",0,9)
@@ -97,10 +89,10 @@ def DoOverrides(Name, TIP):
                     xsl1 = x.strftime("%Y/%m/%d %H:%M:%S")
                     x = datetime.now() 
                     xsl2 = x.strftime("%Y/%m/%d %H:%M:%S")
-                    SaveOverride(xsl1,xsl2,TIP)
+                    SaveOverride(xsl1,xsl2)
                 if j == 2:
                     x = datetime.now() + timedelta(hours = 1, minutes = 0)
                     xsl2 = x.strftime("%Y/%m/%d %H:%M:%S")
                     x = datetime.now() 
                     xsl1 = x.strftime("%Y/%m/%d %H:%M:%S")
-                    SaveOverride(xsl1,xsl2,TIP)
+                    SaveOverride(xsl1,xsl2)
