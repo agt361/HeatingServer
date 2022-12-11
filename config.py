@@ -12,13 +12,13 @@ load_dotenv()
 
 NaveIP = os.getenv('NaveIP')
 NavePicoIP = os.getenv('NavePicoIP')
-NaveServerPicoIP = os.getenv('NaveServerPicoIP')
+NaveClientPicoIP = os.getenv('NaveClientPicoIP')
 ChancelIP = os.getenv('ChancelIP')
 ChancelPicoIP = os.getenv('ChancelPicoIP')
-ChancelServerPicoIP = os.getenv('ChancelServerPicoIP')
+ChancelClientPicoIP = os.getenv('ChancelClientPicoIP')
 
-Picourl = pd.Series( [NavePicoIP, NaveServerPicoIP, ChancelPicoIP, ChancelServerPicoIP], \
-            index=['Nave', 'NaveServer', 'Chancel', 'ChancelServer'])
+Picourl = pd.Series( [NavePicoIP, NaveClientPicoIP, ChancelPicoIP, ChancelClientPicoIP], \
+            index=['Nave', 'NaveClient', 'Chancel', 'ChancelClient'])
 
 LINE_UP = '\033[1A'
 LINE_CLEAR = '\x1b[2K'
