@@ -23,29 +23,19 @@ LINE_CLEAR = '\x1b[2K'
 BOLD = '\033[1m'
 GhostFile = "/home/pi/shared/Ghost.csv"
 
-def SaveFile(df,FileName,TIP):
+def SaveFile(df,FileName):
     x = datetime.now()
     xsl = x.strftime("%y%m%d%H%M%S")
 
     with open(GhostFile, 'w') as csv_file:
         df.to_csv(path_or_buf=csv_file, index = False)
     shutil.copyfile(GhostFile,FileName)
-    CTFR = 'pi@'+TIP+':'+FileName
-    CTF = FileName
-    subprocess.run(['scp', CTF, CTFR],
-                stdout=subprocess.DEVNULL,
-				stderr=subprocess.DEVNULL)
-    CTFR = 'pi@'+TIP+':/home/pi/shared/Flag'+xsl
+    CTFR = 'Flag'+xsl
     CTF = "/home/pi/shared/Flag"
-    subprocess.run(['scp', CTF, CTFR],
-                stdout=subprocess.DEVNULL,
-				stderr=subprocess.DEVNULL)
+    shutil.copyfile(CTF,CTFR)
 
-def GetFile(filename,TIP):
-    CTFR = 'pi@'+TIP+':'+filename
-    CTF = filename
-    subprocess.run(['scp', CTFR, CTF],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-    return pd.read_csv(CTF)
+def GetFile(filename):
+    return pd.read_csv(filename)
 
 def my_int(text,mx):
     try: y = int(text)

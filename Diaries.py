@@ -55,20 +55,20 @@ def GetNewTemporary():
     sdd = d.strftime("%H:%M")
     return [sd, txt,sdd]
 
-def PutInNewTemporaryEntry(FileName,TIP):
+def PutInNewTemporaryEntry(FileName):
     df = pd.read_csv(FileName)
     gnt = GetNewTemporary()
     df.loc[-1] = gnt
 
     df.sort_values(by=['DateTime'], inplace=True)
-    SaveFile(df,FileName,TIP)
+    SaveFile(df,FileName)
 
-def DoTemporaryEntries(Name,TIP):
+def DoTemporaryEntries(Name):
     while (True):
         ClrScrn()
         print("Temporary Diary for ",Name,"\n" ,sep ='')
         FileName = "/home/pi/shared/Temporary.csv"
-        df = GetFile(FileName,TIP)
+        df = GetFile(FileName)
         indx = df[pd.to_datetime(df['DateTime']) < BasicDate(datetime.now())].index
         df.drop(indx , inplace=True)
         it = iter((1,2,3,4,5,6,7,8,9,10,11,12,13,14))
@@ -76,13 +76,13 @@ def DoTemporaryEntries(Name,TIP):
         print("\n")
         y= GetNumber(True,'Enter 1 (new entry), 2 (delete entry) or 0 (leave): ', 0, 2)
         if (y == 1):
-            PutInNewTemporaryEntry(FileName,TIP)
+            PutInNewTemporaryEntry(FileName)
         if (y == 2):
             print('\nEnter number of row to delete or \n')
             z = GetNumber(True,'0 to abort: ', 0,len(df)) 
             if z > 0:
                 df.drop(z-1,axis=0,inplace=True)
-                SaveFile(df,FileName,TIP)
+                SaveFile(df,FileName)
         if (y == 0):
            return
 
@@ -120,13 +120,13 @@ def GetNewPermanent():
         pattern = pattern.replace('N','n')
     return [txt,DoWeek,sd,sdd,pattern,DoW," "]
 
-def PutInNewPermanentEntry(FileName,Name,TIP):
+def PutInNewPermanentEntry(FileName,Name):
     df = pd.read_csv(FileName)
     BlankOldIgnores(df)
     gnt = GetNewPermanent()
     df.loc[-1] = gnt
     df.sort_values(by=['DoW','Time'], inplace=True)
-    SaveFile(df,FileName,TIP)
+    SaveFile(df,FileName)
 
 def BlankOldIgnores(df):
     for i in range(len(df)):
@@ -140,12 +140,12 @@ def BlankOldIgnores(df):
 def BasicDate(x):
 	return datetime.combine(x, datetime.min.time())
     
-def DoPermanentEntries(Name,TIP):
+def DoPermanentEntries(Name):
     while (True):
         ClrScrn()
         print("Permanent Diary for ",Name,"\n" ,sep ='')
-        FileName = "/home/pi/shared/Permanent.csv"
-        df = GetFile(FileName,TIP)
+        FileName = "Permanent.csv"
+        df = GetFile(FileName)
         BlankOldIgnores(df)
         df1 = df.drop('DoW', axis = 1)
 
@@ -155,13 +155,13 @@ def DoPermanentEntries(Name,TIP):
         print("\n")
         y= GetNumber(True,'Enter 1 (new entry), 2 (delete entry), 3 (ignore) or 0 (leave): ', 0, 3)
         if (y == 1):
-            PutInNewPermanentEntry(FileName,Name,TIP)
+            PutInNewPermanentEntry(FileName,Name)
         if (y == 2):
             print('\nEnter number of row to delete or \n')
             z = GetNumber(True,'0 to abort: ', 0,len(df)) 
             if z > 0:
                 df.drop(z-1,axis=0,inplace=True)
-                SaveFile(df,FileName,TIP)
+                SaveFile(df,FileName)
         if (y == 3):
             print("\nEnter number of row for 'ignore' status change or\n")
             z = GetNumber(True,'0 to abort: ', 0,len(df))
@@ -191,23 +191,23 @@ def DoPermanentEntries(Name,TIP):
                 else:
                     sd = ' '
                 df.loc[z-1,'Ignore'] = sd
-                SaveFile(df,FileName,TIP)
+                SaveFile(df,FileName)
         if (y == 0):
            return
             
-def DoDiaries(Name, TIP):
+def DoDiaries(Name):
     ClrScrn()
     while (True):
         ClrScrn()
         print("Heating Control Diaries for ",Name,"\n\n" ,sep ='')
         y = GetNumber(True,'Enter 1 (Permanent Diary), 2 (Temporary Diary) or 0 (Leave): ', 0,2)
         if y == 1:
-            thread = Thread(target=DoPermanentEntries(Name,TIP))
+            thread = Thread(target=DoPermanentEntries(Name))
             thread.start()
             # wait for the thread to finish
             thread.join()
         if y == 2:
-            thread = Thread(target=DoTemporaryEntries(Name,TIP))
+            thread = Thread(target=DoTemporaryEntries(Name))
             thread.start()
             # wait for the thread to finish
             thread.join()
