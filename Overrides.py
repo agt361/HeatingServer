@@ -61,24 +61,24 @@ def DoOverrides(Name):
         print("Heating overrides for ",Name,"\n" ,sep ='')
         if KOnT > datetime.now():
             print ("Heating overridden to ON until",KOnT,'\n')
-            j = GetNumber(True,"Do you want to cancel this? 0 (No) 9 (Yes): ",0,9)
-            if j < 9: return
+            j = GetNumber(True,"Do you want to cancel this? 0 (No) 1 (Yes): ",0,1)
+            if j < 1: return
             else: 
                 x = datetime.now()
                 xsl = x.strftime("%Y/%m/%d %H:%M:%S")
                 SaveOverride(xsl,xsl)
         elif KOffT > datetime.now():
             print ("Heating overridden to OFF until",KOffT,'\n')
-            j = GetNumber(True,"Do you want to cancel this? 0 (No) 9 (Yes): ",0,9)
-            if j < 9: return
+            j = GetNumber(True,"Do you want to cancel this? 0 (No) 1 (Yes): ",0,1)
+            if j < 1: return
             else: 
                 x = datetime.now()
                 xsl = x.strftime("%Y/%m/%d %H:%M:%S")
                 SaveOverride(xsl,xsl)
         else:
             print ("No heating overrides\n")
-            j = GetNumber(True,"Do you want enter an override 0 (No) 9 (Yes): ",0,9)
-            if j < 9: return
+            j = GetNumber(True,"Do you want enter an override 0 (No) 1 (Yes): ",0,1)
+            if j < 1: return
             else: 
                 j = GetNumber(True,"1 (ON), 2 (OFF) or 0 (leave): ",0,2)
                 if j == 0: return

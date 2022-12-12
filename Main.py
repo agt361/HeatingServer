@@ -31,11 +31,14 @@ def ShowStatus(name):
 #					stdout=subprocess.DEVNULL,
 #					stderr=subprocess.DEVNULL)
 	df = pd.read_csv(CTF)
-	navetemp = df.loc[0,'Temperature']
-	navedat =  df.loc[0,'DateTime']
-	if df.loc[0,'Heating On'] == True: naveho = 'Heating On'
-	else: naveho = 'Heating Off'
-	print(f'\nCurrent {name} Temperature is {navetemp} at {navedat}, {naveho}\n')
+	print(name.upper()+'\n')
+	print(tabulate(df, showindex=False, headers=df.columns))
+	print('\n')
+#	navetemp = df.loc[0,'Temperature']
+#	navedat =  df.loc[0,'DateTime']
+#	if df.loc[0,'Heating On'] == True: naveho = 'Heating On'
+#	else: naveho = 'Heating Off'
+#	print(f'\nCurrent {name} Temperature is {navetemp} at {navedat}, {naveho}\n')
 	
 while True:
 	os.chdir("/home/pi/shared")
@@ -48,7 +51,7 @@ while True:
 		ShowStatus("Chancel")
 	except:
 		pass
-	i = GetNumber(True,"\n1 (Nave), 2 (Chancel), 0 (Exit) ",0,2)
+	i = GetNumber(True,"\n1 (Nave), 2 (Chancel), 3 (Refresh), 0 (Exit) ",0,3)
 	if i == 1: DoMenu('Nave')
 	if i == 2: DoMenu('Chancel')
 	if i == 0: 
