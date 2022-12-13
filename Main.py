@@ -41,7 +41,7 @@ def ShowStatus(name):
 #	print(f'\nCurrent {name} Temperature is {navetemp} at {navedat}, {naveho}\n')
 	
 while True:
-	os.chdir("/home/pi/shared")
+	os.chdir("/home/pi/shared")	
 	ClrScrn()
 	try:
 		ShowStatus("Nave")

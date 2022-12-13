@@ -26,15 +26,14 @@ BOLD = '\033[1m'
 GhostFile = "/home/pi/shared/Ghost.csv"
 
 def SaveFile(df,FileName):
-    x = datetime.now()
-    xsl = x.strftime("%y%m%d%H%M%S")
-
     with open(GhostFile, 'w') as csv_file:
         df.to_csv(path_or_buf=csv_file, index = False)
     shutil.copyfile(GhostFile,FileName)
-    CTFR = 'Flag'+xsl
-    CTF = "/home/pi/shared/Flag"
-    shutil.copyfile(CTF,CTFR)
+#    x = datetime.now()
+#    xsl = x.strftime("%y%m%d%H%M%S")
+#    CTFR = 'Flag'+xsl
+#    CTF = "/home/pi/shared/Flag"
+#    shutil.copyfile(CTF,CTFR)
 
 def GetFile(filename):
     return pd.read_csv(filename)
