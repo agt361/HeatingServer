@@ -41,7 +41,7 @@ def GetNewTemporary():
             continue
         break
     print(d)
-    sd = d.strftime("%Y/%m/%d %H:%M")
+    sd = d.strftime("%Y-%m-%d %H:%M")
     ClrScrn()
     print(sd)
     print("\n")
@@ -67,7 +67,7 @@ def DoTemporaryEntries(Name):
     while (True):
         ClrScrn()
         print("Temporary Diary for ",Name,"\n" ,sep ='')
-        FileName = "/home/pi/shared/Temporary.csv"
+        FileName = "Temporary.csv"
         df = GetFile(FileName)
         indx = df[pd.to_datetime(df['DateTime']) < BasicDate(datetime.now())].index
         df.drop(indx , inplace=True)
@@ -187,7 +187,7 @@ def DoPermanentEntries(Name):
                         print("\nNot a "+df.loc[z-1,'Day of Week']+" - wait!")
                         sleep(5)
                         continue
-                    sd = d.strftime("%Y/%m/%d")
+                    sd = d.strftime("%Y-%m-%d")
                 else:
                     sd = ' '
                 df.loc[z-1,'Ignore'] = sd
