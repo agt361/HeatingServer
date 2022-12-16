@@ -56,7 +56,3 @@ while True:
 	if i == 2: DoMenu('Chancel')
 	if i == 0: 
 		exit(0)
-		
-
-
-

@@ -32,5 +32,3 @@ Event:         {df.loc[0,'Event']}
 """)
 
 	sleep(120)
-    
-
