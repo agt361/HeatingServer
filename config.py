@@ -10,10 +10,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-NaveIP = os.getenv('NaveIP')
+NaveUsed = eval(os.getenv('NaveUsed'))
 NavePicoIP = os.getenv('NavePicoIP')
 NaveClientPicoIP = os.getenv('NaveClientPicoIP')
-ChancelIP = os.getenv('ChancelIP')
+ChancelUsed = eval(os.getenv('ChancelUsed'))
 ChancelPicoIP = os.getenv('ChancelPicoIP')
 ChancelClientPicoIP = os.getenv('ChancelClientPicoIP')
 
@@ -29,11 +29,6 @@ def SaveFile(df,FileName):
     with open(GhostFile, 'w') as csv_file:
         df.to_csv(path_or_buf=csv_file, index = False)
     shutil.copyfile(GhostFile,FileName)
-#    x = datetime.now()
-#    xsl = x.strftime("%y%m%d%H%M%S")
-#    CTFR = 'Flag'+xsl
-#    CTF = "/home/pi/shared/Flag"
-#    shutil.copyfile(CTF,CTFR)
 
 def GetFile(filename):
     return pd.read_csv(filename)

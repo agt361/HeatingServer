@@ -24,35 +24,27 @@ def DoMenu(TName):
 		if i == 0:
 			return
 
-def ShowStatus(name):
-#	CTFR = 'pi@'+TIP+':/home/pi/shared/CurrentTemperature.csv'
-	CTF = "/home/pi/shared/"+name+"/CurrentTemperature.csv"
-#	subprocess.run(['scp', CTFR, CTF],
-#					stdout=subprocess.DEVNULL,
-#					stderr=subprocess.DEVNULL)
-	df = pd.read_csv(CTF)
-	print(name.upper()+'\n')
-	print(tabulate(df, showindex=False, headers=df.columns))
-	print('\n')
-#	navetemp = df.loc[0,'Temperature']
-#	navedat =  df.loc[0,'DateTime']
-#	if df.loc[0,'Heating On'] == True: naveho = 'Heating On'
-#	else: naveho = 'Heating Off'
-#	print(f'\nCurrent {name} Temperature is {navetemp} at {navedat}, {naveho}\n')
+def ShowStatus(name,flag):
+	if flag:
+		CTF = "/home/pi/shared/"+name+"/CurrentTemperature.csv"
+		df = pd.read_csv(CTF)
+		print(name.upper()+'\n')
+		print(tabulate(df, showindex=False, headers=df.columns))
+		print('\n')
 	
 while True:
 	os.chdir("/home/pi/shared")	
 	ClrScrn()
 	try:
-		ShowStatus("Nave")
+		ShowStatus("Nave",cf.Naveused)
 	except:
 		pass
 	try:
-		ShowStatus("Chancel")
+		ShowStatus("Chancel",cf.ChancelUsed)
 	except:
 		pass
 	i = GetNumber(True,"\n1 (Nave), 2 (Chancel), 3 (Refresh), 0 (Exit) ",0,3)
-	if i == 1: DoMenu('Nave')
-	if i == 2: DoMenu('Chancel')
+	if i == 1 and cf.NaveUsed == True: DoMenu('Nave')
+	if i == 2 and cf.ChancelUsed == True: DoMenu('Chancel')
 	if i == 0: 
 		exit(0)
