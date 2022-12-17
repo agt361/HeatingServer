@@ -36,7 +36,7 @@ while True:
 	os.chdir("/home/pi/shared")	
 	ClrScrn()
 	try:
-		ShowStatus("Nave",cf.Naveused)
+		ShowStatus("Nave",cf.NaveUsed)
 	except:
 		pass
 	try:
