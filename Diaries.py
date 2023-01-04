@@ -70,7 +70,10 @@ def DoTemporaryEntries(Name):
         FileName = "Temporary.csv"
         df = GetFile(FileName)
         indx = df[pd.to_datetime(df['DateTime']) < BasicDate(datetime.now())].index
-        df.drop(indx , inplace=True)
+        if len(indx) > 0:
+            df = df.drop(indx )
+            SaveFile(df,FileName)
+            continue
         it = iter((1,2,3,4,5,6,7,8,9,10,11,12,13,14))
         print(tabulate(df, showindex=it, headers=df.columns))
         print("\n")
@@ -81,7 +84,7 @@ def DoTemporaryEntries(Name):
             print('\nEnter number of row to delete or \n')
             z = GetNumber(True,'0 to abort: ', 0,len(df)) 
             if z > 0:
-                df.drop(z-1,axis=0,inplace=True)
+                df = df.drop(z-1,axis=0)
                 SaveFile(df,FileName)
         if (y == 0):
            return
