@@ -52,7 +52,7 @@ def DoSystem(Name):
         if y == 3:
             df.loc[0,'Hysteresis'] = GetNumberFloat(True,"\nEnter Hysteresis: ", 0.1, 2)
         if y == 4:
-            df.loc[0,'Thermal Lag'] = GetNumberFloat(True,"\nEnter Thermal Lag: ", 0.1, 2)
+            df.loc[0,'Thermal Lag'] = GetNumberFloat(True,"\nEnter Thermal Lag: ", 0.1, 4)
 #        df.loc[0,'PicoIP'] = cf.Picourl[Name]
 #        df.loc[0,'PicoClientIP'] = cf.Picourl[Name+'Client']
         SaveFile(df,FileName)
